@@ -52,28 +52,46 @@ export default function ResultViewer({ content, outputMode, inputTokens, outputT
     alert('Đã copy nội dung gốc vào Clipboard!');
   };
 
+  const downloadMarkdown = () => {
+    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'ket_qua_ocr.md';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const downloadPDF = () => {
     window.print();
   };
 
   return (
     <div className="bg-slate-900 border border-slate-700 rounded-xl overflow-hidden mt-6 print-expand">
-      <div className="flex items-center justify-between p-3 border-b border-slate-800 bg-slate-800/50 print-hidden">
+      <div className="flex items-center justify-between p-3 border-b border-slate-800 bg-slate-800/50 print-hidden flex-wrap gap-2">
         <h3 className="text-sm font-semibold text-slate-200">Kết quả ({outputMode.toUpperCase()})</h3>
-        <div className="flex items-center gap-4 text-xs">
+        <div className="flex items-center gap-2 sm:gap-4 text-xs flex-wrap">
           <span className="text-slate-400 hidden sm:inline">Input: <span className="text-sky-400 font-mono">{inputTokens}</span> tokens</span>
           <span className="text-slate-400 hidden sm:inline">Output: <span className="text-emerald-400 font-mono">{outputTokens}</span> tokens</span>
           <button 
             onClick={copyToClipboard}
-            className="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded transition-colors"
+            className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white rounded transition-colors"
           >
             Copy Raw
           </button>
           <button 
-            onClick={downloadPDF}
-            className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded flex items-center gap-1 transition-colors shadow-sm"
+            onClick={downloadMarkdown}
+            className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded flex items-center gap-1 transition-colors shadow-sm"
           >
-            <Download size={14} /> Xuất PDF
+            <Download size={14} /> Tải .MD
+          </button>
+          <button 
+            onClick={downloadPDF}
+            className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded flex items-center gap-1 transition-colors shadow-sm"
+          >
+            <Download size={14} /> In PDF
           </button>
         </div>
       </div>
