@@ -96,9 +96,9 @@ export default function ResultViewer({ content, outputMode, inputTokens, outputT
         </div>
       </div>
       
-      <div className={`p-4 md:p-6 overflow-auto max-h-[70vh] print-expand ${outputMode === 'html' ? 'bg-white text-slate-900 rounded-b-xl' : ''}`}>
+      <div className="p-4 md:p-6 overflow-auto max-h-[70vh] print-expand bg-white text-slate-900 rounded-b-xl">
         <div 
-          className={`max-w-none break-words custom-result-content ${outputMode === 'markdown' ? 'prose prose-invert prose-slate' : ''}`}
+          className={`max-w-none break-words custom-result-content ${outputMode === 'markdown' ? 'prose prose-slate' : ''}`}
           dangerouslySetInnerHTML={{ __html: rendered }}
         />
       </div>

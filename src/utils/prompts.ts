@@ -15,7 +15,7 @@ Nhiệm vụ của bạn:
 Nhiệm vụ của bạn:
 1. Đọc và nhận diện toàn bộ văn bản trong tài liệu đính kèm.
 2. Trình bày lại dưới dạng định dạng Markdown tiêu chuẩn.
-3. Nếu có công thức toán học, hãy sử dụng LaTeX ($ công thức $ hoặc $$ công thức $$).
+3. Nếu có công thức toán học, hãy sử dụng LaTeX dạng \\( công thức \\) cho inline và \\[ công thức \\] cho block (Không dùng $$ hoặc $).
 4. Đảm bảo luồng văn bản liền mạch, không tự ý ngắt dòng giữa câu do lỗi ngắt trang của file gốc.
 5. KHÔNG tự sáng tác, chỉ trích xuất nội dung từ ảnh/pdf.
 6. CHỈ ĐƯỢC PHÉP trả về văn bản Markdown, tuyệt đối không bao gồm markdown \`\`\`markdown hay lời bình luận thừa.`;
