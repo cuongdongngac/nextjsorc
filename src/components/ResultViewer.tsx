@@ -1,0 +1,81 @@
+import { useState, useEffect } from 'react';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
+import { Download } from 'lucide-react';
+
+interface ResultViewerProps {
+  content: string;
+  outputMode: 'markdown' | 'html';
+  inputTokens: number;
+  outputTokens: number;
+}
+
+export default function ResultViewer({ content, outputMode, inputTokens, outputTokens }: ResultViewerProps) {
+  const [rendered, setRendered] = useState<string>('');
+
+  useEffect(() => {
+    if (!content) {
+      setRendered('');
+      return;
+    }
+
+    const processContent = async () => {
+      let html = '';
+      if (outputMode === 'markdown') {
+        html = await marked.parse(content);
+      } else {
+        html = content;
+      }
+      
+      const cleanHtml = DOMPurify.sanitize(html, {
+        ADD_TAGS: ['style'], // Cho phép the style de render CSS neu co
+        FORCE_BODY: true
+      });
+      setRendered(cleanHtml);
+    };
+
+    processContent();
+  }, [content, outputMode]);
+
+  if (!content) return null;
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(content);
+    alert('Đã copy nội dung gốc vào Clipboard!');
+  };
+
+  const downloadPDF = () => {
+    window.print();
+  };
+
+  return (
+    <div className="bg-slate-900 border border-slate-700 rounded-xl overflow-hidden mt-6 print-expand">
+      <div className="flex items-center justify-between p-3 border-b border-slate-800 bg-slate-800/50 print-hidden">
+        <h3 className="text-sm font-semibold text-slate-200">Kết quả ({outputMode.toUpperCase()})</h3>
+        <div className="flex items-center gap-4 text-xs">
+          <span className="text-slate-400 hidden sm:inline">Input: <span className="text-sky-400 font-mono">{inputTokens}</span> tokens</span>
+          <span className="text-slate-400 hidden sm:inline">Output: <span className="text-emerald-400 font-mono">{outputTokens}</span> tokens</span>
+          <button 
+            onClick={copyToClipboard}
+            className="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded transition-colors"
+          >
+            Copy Raw
+          </button>
+          <button 
+            onClick={downloadPDF}
+            className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded flex items-center gap-1 transition-colors shadow-sm"
+          >
+            <Download size={14} /> Xuất PDF
+          </button>
+        </div>
+      </div>
+      
+      <div className="p-4 md:p-6 overflow-auto max-h-[70vh] print-expand">
+        <div 
+          className="prose prose-invert prose-slate max-w-none break-words custom-result-content"
+          dangerouslySetInnerHTML={{ __html: rendered }}
+        />
+      </div>
+    </div>
+  );
+}
