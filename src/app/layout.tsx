@@ -15,6 +15,28 @@ export default function RootLayout({
     <html lang="vi" suppressHydrationWarning>
       <body className="antialiased bg-slate-950 text-slate-200" suppressHydrationWarning>
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.MathJax = {
+                tex: {
+                  inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+                  displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+                  processEscapes: true,
+                },
+                svg: {
+                  fontCache: 'global'
+                }
+              };
+            `,
+          }}
+        />
+        <script
+          type="text/javascript"
+          id="MathJax-script"
+          async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        />
       </body>
     </html>
   );

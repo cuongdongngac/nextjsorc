@@ -29,9 +29,17 @@ export default function ResultViewer({ content, outputMode, inputTokens, outputT
       
       const cleanHtml = DOMPurify.sanitize(html, {
         ADD_TAGS: ['style'], // Cho phép the style de render CSS neu co
-        FORCE_BODY: true
+        FORCE_BODY: true,
+        USE_PROFILES: { html: true, mathMl: true, svg: true }
       });
       setRendered(cleanHtml);
+      
+      // Trigger MathJax typeset sau khi render
+      setTimeout(() => {
+        if (typeof window !== 'undefined' && (window as any).MathJax && (window as any).MathJax.typesetPromise) {
+          (window as any).MathJax.typesetPromise().catch((err: any) => console.error('MathJax error:', err));
+        }
+      }, 200);
     };
 
     processContent();
@@ -70,9 +78,9 @@ export default function ResultViewer({ content, outputMode, inputTokens, outputT
         </div>
       </div>
       
-      <div className="p-4 md:p-6 overflow-auto max-h-[70vh] print-expand">
+      <div className={`p-4 md:p-6 overflow-auto max-h-[70vh] print-expand ${outputMode === 'html' ? 'bg-white text-slate-900 rounded-b-xl' : ''}`}>
         <div 
-          className="prose prose-invert prose-slate max-w-none break-words custom-result-content"
+          className={`max-w-none break-words custom-result-content ${outputMode === 'markdown' ? 'prose prose-invert prose-slate' : ''}`}
           dangerouslySetInnerHTML={{ __html: rendered }}
         />
       </div>
