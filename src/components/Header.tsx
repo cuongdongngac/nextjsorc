@@ -16,7 +16,7 @@ export default function Header({ onOpenSettings, onClearKey, hasApiKey }: Header
       <div className="flex items-center gap-6">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent select-none">
-            Looking-Back-OCR
+            Smart Vision OCR
           </span>
         </Link>
         

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Looking-Back-OCR",
+  title: "Smart Vision OCR",
   description: "Web app for OCR with OpenRouter API",
 };
 
