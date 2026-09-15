@@ -77,8 +77,28 @@ export default function GuidePage() {
 
             {/* Mục 4 */}
             <section>
+              <h2 className="flex items-center gap-2 text-lg font-semibold text-purple-400 mb-3">
+                <FileText size={20} /> 4. Chuyển đổi Markdown sang Word bằng Pandoc
+              </h2>
+              <div className="pl-7 space-y-3">
+                <p className="text-sm text-slate-400">
+                  Khi xuất file dạng <strong>Tối giản (Markdown)</strong>, các công thức toán học được chuẩn hóa sang dạng <code>\(...\)</code> và <code>\[...\]</code>. Để chuyển file <code>.md</code> này sang Microsoft Word (<code>.docx</code>) mà Word vẫn nhận diện đúng công thức (không bị lỗi raw text), bạn có thể dùng công cụ <strong>Pandoc</strong> với câu lệnh sau:
+                </p>
+                <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-sm text-slate-300 overflow-x-auto whitespace-nowrap">
+                  pandoc ket_qua_ocr.md -f markdown+tex_math_single_backslash-tex_math_dollars -o ket_qua_ocr.docx
+                </div>
+                <ul className="list-disc pl-5 space-y-2 text-sm text-slate-400">
+                  <li><code>+tex_math_single_backslash</code>: Kích hoạt khả năng đọc công thức dùng dấu backslash <code>\(\)</code> và <code>\[\]</code>.</li>
+                  <li><code>-tex_math_dollars</code>: Vô hiệu hóa dấu <code>$$</code> (để tránh lỗi nếu AI lỡ sinh nhầm).</li>
+                  <li>Nếu bạn có file Word mẫu (template), hãy thêm <code>--reference-doc=template.docx</code> vào cuối câu lệnh để Word mới sinh ra giữ nguyên font chữ và lề của bạn.</li>
+                </ul>
+              </div>
+            </section>
+
+            {/* Mục 5 */}
+            <section>
               <h2 className="flex items-center gap-2 text-lg font-semibold text-amber-400 mb-3">
-                <ShieldAlert size={20} /> 4. Quyền riêng tư (Privacy)
+                <ShieldAlert size={20} /> 5. Quyền riêng tư (Privacy)
               </h2>
               <div className="pl-7 space-y-3 text-sm text-slate-400">
                 <p>
